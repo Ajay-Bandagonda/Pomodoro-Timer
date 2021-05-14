@@ -12,7 +12,10 @@
 
 <body>
     <h1>Pomodoro Timer!</h1>
-    <h2 id="timer"></h2>
+    <h2 id="timer">
+        <span id="minutes">30</span>
+        <span id="seconds">:00</span>
+    </h2>
     <form>
         <div>
             <label for="studyLen">Study Session Length: </label>
@@ -48,7 +51,7 @@
                 <option value="7">7</option>
             </select>
         </div>
-        <button id="startTimer">Start</button>
+        <button type="submit" id="startTimer">Start</button>
         <button id="stopTimer">Stop</button>
     </form>
     <script src="pomodoro.js"></script>

@@ -1,37 +1,50 @@
-let timerLabel = document.querySelector("#timer")
-let startBtn = document.querySelector("#startTimer")
+let secondsLabel = document.querySelector("#seconds")
+let minutesLabel = document.querySelector("#minutes")
 let stopBtn = document.querySelector("#stopTimer")
+let studyMinutes = document.querySelector("#studySelect")
 let form = document.querySelector("form")
 
-let myTimer;
-let seconds = 15
-let minutes = 1
+let secondsCounter, minutesCounter;
+let sec = 0
+let mins = 30
 
 stopBtn.addEventListener("click", (e) => {
     e.preventDefault()
-    clearInterval(myTimer)
+    clearInterval(secondsCounter)
 })
 
 form.addEventListener("submit", (e) => {
     e.preventDefault()
-    clock()
+    timer(mins, sec)
 })
 
-function clock() {
-    myTimer = setInterval(myClock, 1000);
+studyMinutes.addEventListener("change", (e) => {
+    mins = studyMinutes.value
+    minutesLabel.innerHTML = `${studyMinutes.value}`
+})
+
+function timer(minutes, seconds) {
+    secondsCounter = setInterval(myClock, 1000);
 
     function myClock() {
         if (minutes <= 0 && seconds <= 0) {
-            clearInterval(myTimer);
+            clearInterval(secondsCounter);
         }
         else if (seconds == 0) {
             seconds = 59
+            minutes--;
+        }
+        if (minutes < 10) {
+            minutesLabel.innerHTML = `0${minutes}`
+        }
+        else {
+            minutesLabel.innerHTML = `${minutes}`
         }
         if (seconds < 10) {
-            timerLabel.innerHTML = `00:0${seconds--}`
+            secondsLabel.innerHTML = `:0${seconds--}`
         } 
         else {
-            timerLabel.innerHTML = `00:${seconds--}`
+            secondsLabel.innerHTML = `:${seconds--}`
         }
     }
 }
