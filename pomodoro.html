@@ -21,6 +21,7 @@
         <div>
             <label for="studyLen">Study Session Length: </label>
             <select name="studyLen" id="studySelect">
+                <option value="1">1</option>
                 <option value="30">30</option>
                 <option value="35">35</option>
                 <option value="40">40</option>
@@ -32,6 +33,7 @@
         <div>
             <label for="breakLen">Break Length: </label>
             <select name="breakLen" id="breakSelect">
+                <option value="1">1</option>
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="15">15</option>
@@ -53,7 +55,7 @@
             </select>
         </div>
         <button type="submit" id="startTimer">Start</button>
-        <button id="stopTimer">Stop</button>
+        <button id="stopTimer" disabled=true>Stop</button>
     </form>
     <script src="pomodoro.js"></script>
 </body>

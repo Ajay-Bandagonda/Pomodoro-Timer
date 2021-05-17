@@ -1,29 +1,31 @@
 let secondsLabel = document.querySelector("#seconds")
 let minutesLabel = document.querySelector("#minutes")
+let startBtn = document.querySelector("#startTimer")
 let stopBtn = document.querySelector("#stopTimer")
 let studyMinutes = document.querySelector("#studySelect")
+let breakMinutes = document.querySelector("#breakSelect")
 let sessionType = document.querySelector("#sessionType")
+let sessionsSelect = document.querySelector("#sessionsSelect")
 let form = document.querySelector("form")
 
 let secondsCounter;
-let sec = 0
-let mins = 30
+let mins = 1;
 
 class Timer {
-    constructor(minutes, seconds, minutesLabel, secondsLabel, sessionLabel, sessionType = 'study') {
+    constructor(minutes, minutesLabel, secondsLabel, sessionLabel, sessionType = 'study') {
         this.minutes = minutes;
-        this.seconds = seconds;
+        this.seconds = 0;
         this.secondsLabel = secondsLabel
         this.minutesLabel = minutesLabel
         this.sessionType = sessionType
         this.sessionLabel = sessionLabel
-        this.isFinished = false
+        this.finishedTimeout = null
+        this.timeRemaining = (this.minutes * 60000) + (this.seconds * 1000) + 1000
     }
     start() {
         this.timer = setInterval(() => {
             if (this.minutes <= 0 && this.seconds <= 0) {
                 this.stop()
-                this.isFinished = true
             }
             else if (this.seconds == 0) {
                 this.seconds = 59
@@ -48,6 +50,11 @@ class Timer {
     }
     stop(){
         clearInterval(this.timer)
+        studyMinutes.disabled = false
+        breakMinutes.disabled = false;
+        sessionsSelect.disabled = false;
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
     }
     setMessage(){
         if (this.sessionType === 'break') {
@@ -57,20 +64,57 @@ class Timer {
             this.sessionLabel.innerText = "Study Session in progress! Focus!!"
         }
     }
+    inMilliseconds(){
+        return (this.minutes * 60000) + (this.seconds * 1000) + 1000
+    }
+    async isFinished(){
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                console.log(this.sessionType + " timer finished");
+                resolve("Timer promise resolved");
+            }, this.inMilliseconds());
+        })
+    }
 }
 
-var timer = new Timer(0, 5, minutesLabel, secondsLabel, sessionType)
+let timer;
 
 stopBtn.addEventListener("click", (e) => {
     e.preventDefault()
     timer.stop()
 })
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
     e.preventDefault()
-    //timer(0, 5)
-    
-    timer.start()
+
+    min = parseInt(studyMinutes.value)
+    let breakMin = parseInt(breakMinutes.value)
+    let numSessions = parseInt(sessionsSelect.value)
+
+    studyMinutes.disabled = true
+    breakMinutes.disabled = true;
+    sessionsSelect.disabled = true;
+    startBtn.disabled = true;
+    stopBtn.disabled = false
+
+    for (let i = 0; i < numSessions; i++) {
+        timer = new Timer(mins, minutesLabel, secondsLabel, sessionType)
+        timer.start()
+        await timer.isFinished()
+        let breakTimer = new Timer(breakMin, minutesLabel, secondsLabel, sessionType, "break")
+        breakTimer.start()
+        await breakTimer.isFinished()
+    }
+
+    let finalTimer = new Timer(mins, minutesLabel, secondsLabel, sessionType)
+    finalTimer.start()
+    sessionType.innerText = "Final Study Session! Make it count!!"
+    await finalTimer.isFinished()
+    sessionType.innerText = "Good Job on staying focused! Enjoy the rest of your day!"
+    studyMinutes.disabled = false
+    breakMinutes.disabled = false;
+    sessionsSelect.disabled = false;
+    startBtn.disabled = false;
 })
 
 studyMinutes.addEventListener("change", (e) => {
