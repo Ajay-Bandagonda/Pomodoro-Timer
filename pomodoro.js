@@ -70,6 +70,8 @@ class Timer {
     async isFinished(){
         return new Promise((resolve, reject) => {
             setTimeout(() => {
+                let audio = new Audio('Alarm-sound-effect.mp3');
+                audio.play()
                 console.log(this.sessionType + " timer finished");
                 resolve("Timer promise resolved");
             }, this.inMilliseconds());
@@ -97,14 +99,16 @@ form.addEventListener("submit", async (e) => {
     startBtn.disabled = true;
     stopBtn.disabled = false
 
-    for (let i = 0; i < numSessions; i++) {
-        timer = new Timer(mins, minutesLabel, secondsLabel, sessionType)
-        timer.start()
-        await timer.isFinished()
-        let breakTimer = new Timer(breakMin, minutesLabel, secondsLabel, sessionType, "break")
-        breakTimer.start()
-        await breakTimer.isFinished()
-    }
+    if (numSessions > 1) {
+        for (let i = 0; i < numSessions - 1; i++) {
+            timer = new Timer(mins, minutesLabel, secondsLabel, sessionType)
+            timer.start()
+            await timer.isFinished()
+            let breakTimer = new Timer(breakMin, minutesLabel, secondsLabel, sessionType, "break")
+            breakTimer.start()
+            await breakTimer.isFinished()
+        }
+    } 
 
     let finalTimer = new Timer(mins, minutesLabel, secondsLabel, sessionType)
     finalTimer.start()

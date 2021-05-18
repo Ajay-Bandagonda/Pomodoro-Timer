@@ -6,57 +6,81 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Timer</title>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <style>
+        .spacer {
+            height: 12rem;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Pomodoro Timer!</h1>
-    <p id="sessionType"></p>
-    <h2 id="timer">
-        <span id="minutes">30</span>
-        <span id="seconds">:00</span>
-    </h2>
-    <form>
-        <div>
-            <label for="studyLen">Study Session Length: </label>
-            <select name="studyLen" id="studySelect">
-                <option value="1">1</option>
-                <option value="30">30</option>
-                <option value="35">35</option>
-                <option value="40">40</option>
-                <option value="45">45</option>
-                <option value="50">50</option>
-            </select>
-            <label for="studyLen"> minutes</label>
+    <div class="columns is-multiline">
+        <div class="column is-full spacer"></div>
+        <div class="column"></div>
+        <div class="column is-half">
+            <div class="card has-text-centered is-vcentered">
+                <div class="card-content">
+                    <div class="content">
+                        <h1>Pomodoro Timer!</h1>
+                        <p id="sessionType"></p>
+                        <h2 id="timer" class="is-size-1">
+                            <span id="minutes">30</span>
+                            <span id="seconds">:00</span>
+                        </h2>
+                        <form class="has-text-centered">
+                            <div>
+                                <label for="studyLen">Study Session Length: </label>
+                                <div class="select is-small is-rounded">
+                                    <select name="studyLen" id="studySelect">
+                                        <option value="1">1</option>
+                                        <option value="30">30</option>
+                                        <option value="35">35</option>
+                                        <option value="40">40</option>
+                                        <option value="45">45</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
+                                <label for="studyLen"> minutes</label>
+                            </div>
+                            <div>
+                                <label for="breakLen">Break Length: </label>
+                                <div class="select is-small is-rounded">
+                                    <select name="breakLen" id="breakSelect">
+                                        <option value="1">1</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                    </select>
+                                </div>
+                                <label for="breakLen"> minutes</label>
+                            </div>
+                            <div>
+                                <label for="numSessions">Number of study sessions: </label>
+                                <div class="select is-small is-rounded">
+                                    <select name="numSessions" id="sessionsSelect">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" id="startTimer">Start</button>
+                            <button id="stopTimer" disabled=true>Stop</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="breakLen">Break Length: </label>
-            <select name="breakLen" id="breakSelect">
-                <option value="1">1</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="25">25</option>
-            </select>
-            <label for="breakLen"> minutes</label>
-        </div>
-        <div>
-            <label for="numSessions">Number of study sessions: </label>
-            <select name="numSessions" id="sessionsSelect">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-            </select>
-        </div>
-        <button type="submit" id="startTimer">Start</button>
-        <button id="stopTimer" disabled=true>Stop</button>
-    </form>
+        <div class="column"></div>
+    </div>
     <script src="pomodoro.js"></script>
 </body>
 
